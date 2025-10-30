@@ -2,8 +2,10 @@
 
 // --- 1. Import Dependencies ---
 import { OpenAI } from 'openai';
-import fs from 'fs/promises';
+import fs from 'fs'; // <-- CHANGED: Import the main 'fs' module
+import fsPromises from 'fs/promises'; // <-- CHANGED: Import promises as 'fsPromises'
 import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import ffmpeg from 'fluent-ffmpeg';
 
@@ -24,9 +26,9 @@ const VIDEO_EXTENSIONS = ['.mp4', '.m4v', '.mkv', '.mov', '.avi', '.webm', '.flv
 function extractAudio(videoPath, audioPath) {
     return new Promise((resolve, reject) => {
         ffmpeg(videoPath)
-            .noVideo() // Don't include video
-            .audioCodec('libmp3lame') // Use MP3 codec
-            .audioBitrate(128) // Set bitrate
+            .noVideo()
+            .audioCodec('libmp3lame')
+            .audioBitrate(128)
             .save(audioPath)
             .on('end', () => {
                 console.log(`[FFmpeg] Extracted audio to ${audioPath}`);
@@ -45,9 +47,9 @@ async function transcribeAudio(audioPath) {
     console.log(`[OpenAI] Sending ${audioPath} to Whisper API...`);
 
     const transcription = await openai.audio.transcriptions.create({
-        file: fs.createReadStream(audioPath),
+        // Use the main 'fs' module which has 'createReadStream'
+        file: fs.createReadStream(audioPath), // <-- This line now works
         model: 'whisper-1',
-        language: 'es'
     });
 
     console.log(`[OpenAI] Transcription successful.`);
@@ -60,7 +62,7 @@ async function processDirectory(dirPath) {
 
     try {
         // Read all files in the directory
-        const files = await fs.readdir(dirPath);
+        const files = await fsPromises.readdir(dirPath); // <-- CHANGED: Use fsPromises
 
         // Loop over each file sequentially
         for (const file of files) {
@@ -69,9 +71,8 @@ async function processDirectory(dirPath) {
             // Check if the file is a video
             if (VIDEO_EXTENSIONS.includes(ext)) {
                 const fullVideoPath = path.join(dirPath, file);
-                const fileData = path.parse(file); // { name: 'my-video', ext: '.mp4' }
+                const fileData = path.parse(file);
 
-                // Define paths for temporary audio and final transcript
                 const tempAudioPath = path.join(dirPath, `${fileData.name}.mp3`);
                 const transcriptPath = path.join(dirPath, `${fileData.name}.txt`);
 
@@ -85,7 +86,7 @@ async function processDirectory(dirPath) {
                     const transcriptText = await transcribeAudio(tempAudioPath);
 
                     // --- Step C: Save Transcription ---
-                    await fs.writeFile(transcriptPath, transcriptText);
+                    await fsPromises.writeFile(transcriptPath, transcriptText); // <-- CHANGED: Use fsPromises
                     console.log(`[FS] Saved transcript to ${transcriptPath}`);
 
                 } catch (err) {
@@ -93,12 +94,10 @@ async function processDirectory(dirPath) {
 
                 } finally {
                     // --- Step D: Cleanup ---
-                    // Always delete the temporary audio file, even if transcription failed
                     try {
-                        await fs.unlink(tempAudioPath);
+                        await fsPromises.unlink(tempAudioPath); // <-- CHANGED: Use fsPromises
                         console.log(`[FS] Cleaned up temporary file ${tempAudioPath}`);
                     } catch (cleanupErr) {
-                        // If cleanup fails, just log it. The main error is more important.
                         console.warn(`Could not delete temporary file ${tempAudioPath}`);
                     }
                 }
@@ -112,7 +111,6 @@ async function processDirectory(dirPath) {
 
 // --- 6. Run the Script ---
 async function run() {
-    // Get the directory path from the command line argument
     const dirPath = process.argv[2];
 
     if (!dirPath) {
@@ -121,7 +119,6 @@ async function run() {
         return;
     }
 
-    // Resolve the path to an absolute path
     const absolutePath = path.resolve(dirPath);
 
     await processDirectory(absolutePath);
