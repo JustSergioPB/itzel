@@ -5,7 +5,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 // --- 2. Configuration ---
-// The name of the final, compiled report file.
+// The name of the final, compiled report
 const OUTPUT_FILENAME = '_Compiled_Summaries.txt';
 
 // --- 3. Main Function ---
@@ -57,7 +57,7 @@ async function compileSummaries(dirPath) {
             const formattedDate = item.date.toLocaleString();
 
             // This is the format you requested
-            return `Fecha: ${formattedDate}\nVideo: ${item.name}\nSummary:\n\n${item.summary}`;
+            return `Fecha: ${formattedDate}\nVideo: ${item.name}\Descripción:\n\n${item.summary}`;
         });
 
         // Join each entry with two newlines to separate them
