@@ -4,7 +4,6 @@
 import { OpenAI } from 'openai';
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import ffmpeg from 'fluent-ffmpeg';
 
@@ -48,6 +47,7 @@ async function transcribeAudio(audioPath) {
     const transcription = await openai.audio.transcriptions.create({
         file: fs.createReadStream(audioPath),
         model: 'whisper-1',
+        language: 'es'
     });
 
     console.log(`[OpenAI] Transcription successful.`);
