@@ -31,7 +31,8 @@ async function generateSummary(text) {
 - Stick strictly to the facts and key statements as presented in the text.
 - The summary must be a clear, concise, and factual representation of the content.
 - Focus on who said what, key events, and factual statements.
-- The tone must be strictly formal and neutral.`;
+- The tone must be strictly formal and neutral.
+- Output text must be in the same language as the input text.`;
 
     try {
         const response = await openai.chat.completions.create({
