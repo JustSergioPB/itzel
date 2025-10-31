@@ -82,7 +82,7 @@ function getFileDate(fileName) {
         const [date, time] = unformattedDate.split(' ');
         const [month, day, year] = date.split('-').map(num => parseInt(num, 10));
         const [hour, min, secs] = time.split('-').map(num => parseInt(num, 10));
-        return new Date(year, month - 1, day, hour, min, secs);
+        return new Date(year, month - 1, day, hour, min || 0, secs || 0);
     }
 
     if (fileName.includes('Whatsapp')) {
