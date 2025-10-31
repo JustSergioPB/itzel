@@ -34,14 +34,16 @@ async function compileSummaries(dirPath) {
             // Get file stats (for the date) and content
             const stats = await fs.stat(fullPath);
             const content = await fs.readFile(fullPath, 'utf8');
+            const transcript = await fs.readFile(fullPath.replace('SUMMARY-', ''), 'utf8');
 
             // Get the original video name, e.g., "my-video" from "SUMMARY-my-video.txt"
             const videoName = file.replace('SUMMARY-', '').replace('.txt', '');
 
             return {
-                date: stats.birthtime, // 'mtime' = modification time. Use stats.birthtime if you prefer.
+                date: getFileDate(videoName) || stats.mtime,
                 name: videoName,
                 summary: content,
+                transcript
             };
         });
 
@@ -57,7 +59,7 @@ async function compileSummaries(dirPath) {
             const formattedDate = item.date.toLocaleString();
 
             // This is the format you requested
-            return `Fecha: ${formattedDate}\nVideo: ${item.name}\nDescripción:\n\n${item.summary}`;
+            return `Fecha: ${formattedDate}\nVideo: ${item.name}\nDescripción:\n\n${item.summary}\n\nTranscripción Completa:\n\n${item.transcript}`;
         });
 
         // Join each entry with two newlines to separate them
@@ -72,6 +74,32 @@ async function compileSummaries(dirPath) {
     } catch (err) {
         console.error(`An error occurred: ${err.message}`);
     }
+}
+
+function getFileDate(fileName) {
+    if (fileName.includes('ScreenRecording')) {
+        const [_, unformattedDate] = fileName.split('_');
+        const [date, time] = unformattedDate.split(' ');
+        const [month, day, year, hour, min, secs] = date.split('-').map(num => parseInt(num, 10));
+        return new Date(year, month - 1, day, hour, min, secs);
+    }
+
+    if (fileName.includes('Whatsapp')) {
+        const [unformattedDate, unformattedTime] = fileName.split('at');
+        const left = unformattedDate.split(' ');
+        const date = left[left.length - 1];
+        const [year, month, day] = date.split('-').map(num => parseInt(num, 10));
+        const right = unformattedTime.split('.txt');
+        const [hour, min, secs] = right[0].split('.').map(num => parseInt(num, 10));
+        return new Date(year, month - 1, day, hour, min, secs);
+    }
+
+    if (fileName.includes('VIDEO')) {
+        const [year, month, day, hour, min, secs] = fileName.split('-').filter(part => !isNaN(part));
+        return new Date(year, month - 1, day, hour, min, secs);
+    }
+
+    return undefined;
 }
 
 // --- 4. Run the Script ---
