@@ -59,7 +59,7 @@ async function compileSummaries(dirPath) {
             const formattedDate = item.date.toLocaleString();
 
             // This is the format you requested
-            return `Fecha: ${formattedDate}\nVideo: ${item.name}\nDescripción:\n\n${item.summary}\n\nTranscripción Completa:\n\n${item.transcript}`;
+            return `Fecha: ${formattedDate}\nVideo: ${item.name}\n\nDescripción:\n\n${item.summary}\n\nTranscripción Completa:\n\n${item.transcript}`;
         });
 
         // Join each entry with two newlines to separate them
@@ -80,7 +80,8 @@ function getFileDate(fileName) {
     if (fileName.includes('ScreenRecording')) {
         const [_, unformattedDate] = fileName.split('_');
         const [date, time] = unformattedDate.split(' ');
-        const [month, day, year, hour, min, secs] = date.split('-').map(num => parseInt(num, 10));
+        const [month, day, year] = date.split('-').map(num => parseInt(num, 10));
+        const [hour, min, secs] = time.split('-').map(num => parseInt(num, 10));
         return new Date(year, month - 1, day, hour, min, secs);
     }
 

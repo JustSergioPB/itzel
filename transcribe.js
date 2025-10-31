@@ -50,6 +50,7 @@ async function transcribeAudio(audioPath) {
         // Use the main 'fs' module which has 'createReadStream'
         file: fs.createReadStream(audioPath), // <-- This line now works
         model: 'whisper-1',
+        language: 'es'
     });
 
     console.log(`[OpenAI] Transcription successful.`);
