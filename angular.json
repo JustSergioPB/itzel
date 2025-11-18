@@ -38,7 +38,13 @@
                 }
               ],
               "outputHashing": "all",
-              "serviceWorker": "ngsw-config.json"
+  "serviceWorker": "ngsw-config.json",
+  "fileReplacements": [
+    {
+      "replace": "src/environments/environment.ts",
+      "with": "src/environments/environment.prod.ts"
+    }
+  ]
             },
             "development": {
               "optimization": false,
@@ -55,7 +61,11 @@
               "buildTarget": "itzel:build:production"
             },
             "development": {
-              "buildTarget": "itzel:build:development"
+      "buildTarget": "itzel:build:development",
+      "headers": {
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp"
+      }
             }
           },
           "defaultConfiguration": "development"

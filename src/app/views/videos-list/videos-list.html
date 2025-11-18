@@ -22,9 +22,36 @@
   </div>
   } @else {
   <div class="grid grid-cols-1 gap-4">
-    @for (item of videos; track $index) {
+    @for (item of videos; track videoTrackBy($index, item)) {
     <div>{{item.name}}</div>
     }
   </div>
+  <div class="flex justify-end mt-4">
+    <button
+      pButton
+      pRipple
+      [label]="t('transcribe')"
+      [disabled]="videos.length === 0"
+      (onClick)="transcribe()"
+    ></button>
+  </div>
+  @if(loading){
+  <div
+    class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center"
+  >
+    <p-progressSpinner />
+  </div>
+  }
+  @if(transcriptions.length > 0){
+  <div class="mt-4">
+    <h2 class="text-xl mb-2">{{ t('transcriptions') }}</h2>
+    @for (item of transcriptions; track item.video) {
+    <div class="mb-4">
+      <h3 class="font-bold">{{ item.video }}</h3>
+      <p>{{ item.text }}</p>
+    </div>
+    }
+  </div>
+  }
   }
 </ng-container>
