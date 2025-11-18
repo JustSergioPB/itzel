@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/JustSergioPB/itzel/compare/v1.1.0...v1.1.1) (2025-11-18)
+
+### Bug Fixes
+
+- relative path for logo ([19c7339](https://github.com/JustSergioPB/itzel/commit/19c7339c25ff71d20e0196282f13210b82500383))
+
 # [1.1.0](https://github.com/JustSergioPB/itzel/compare/v1.0.0...v1.1.0) (2025-11-18)
 
 ### Features
