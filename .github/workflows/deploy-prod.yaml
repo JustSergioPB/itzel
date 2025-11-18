@@ -1,57 +1,52 @@
 name: 🚀 Deploy Angular to GitHub Pages
 
-on:
-    workflow_dispatch:
-        inputs:
-            tagName:
-                description: "Tag version to deploy (e.g., v1.0.0)"
-                required: true
+on: workflow_dispatch
 
 permissions:
-    contents: read
-    pages: write
-    id-token: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-    group: "pages"
-    cancel-in-progress: true
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v5
-              with:
-                  fetch-depth: 0
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6
-              with:
-                  node-version: "22.20.0"
-                  cache: "npm"
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22.20.0"
+          cache: "npm"
 
-            - name: 📦 Install dependencies
-              run: npm ci
+      - name: 📦 Install dependencies
+        run: npm ci
 
-            - name: 🛠️ Build Angular App
-              run: npx ng build --configuration production --base-href "/[NOMBRE_DEL_REPOSITORIO]/"
+      - name: 🛠️ Build Angular App
+        run: npx ng build --configuration production --base-href "/[NOMBRE_DEL_REPOSITORIO]/"
 
-            - name: 🧩 Add .nojekyll file
-              run: echo "" > dist/itzel/browser/.nojekyll
+      - name: 🧩 Add .nojekyll file
+        run: echo "" > dist/itzel/browser/.nojekyll
 
-            - name: 📤 Upload Pages artifact
-              uses: actions/upload-pages-artifact@v3
-              with:
-                  path: dist/itzel/browser
+      - name: 📤 Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/itzel/browser
 
-    deploy:
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - name: ⚙️ Setup GitHub Pages
-              uses: actions/configure-pages@v4
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Setup GitHub Pages
+        uses: actions/configure-pages@v4
 
-            - name: 🚀 Deploy to GitHub Pages
-              id: deployment
-              uses: actions/deploy-pages@v4
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
