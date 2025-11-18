@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/JustSergioPB/itzel/compare/v1.0.0...v1.1.0) (2025-11-18)
+
+### Features
+
+- added base + eslint config ([cbe7686](https://github.com/JustSergioPB/itzel/commit/cbe7686c6a751d7fe9281dca9aefc6345c9aae31))
+- updated responsive design ([b5659c1](https://github.com/JustSergioPB/itzel/commit/b5659c18d0bc1dd499bfe536c1836029b4fa6135))
+
 # 1.0.0 (2025-11-18)
 
 ### Features
