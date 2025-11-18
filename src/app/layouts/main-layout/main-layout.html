@@ -1,6 +1,13 @@
-<ng-container *transloco="let t">
-    <div class="flex items-center justify-center h-full gap-2 text-primary">
-        <i class="pi pi-check"></i>
-        <p>{{ t('name', { name: 'Transloco' }) }}</p>
-    </div>
-</ng-container>
+<main class="h-full flex flex-col">
+  <p-menubar
+    [model]="[]"
+    class="border-t-0! border-l-0! border-r-0! rounded-none! border-b-neutral-300! px-12!"
+  >
+    <ng-template #start>
+      <img src="/itzel-logo.png" alt="logo" height="32" width="32" class="size-8 rounded-md" />
+    </ng-template>
+  </p-menubar>
+  <div class="px-12 py-6 flex-1 overflow-auto">
+    <router-outlet></router-outlet>
+  </div>
+</main>
