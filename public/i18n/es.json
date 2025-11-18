@@ -1,3 +1,17 @@
 {
-    "name": "Me llamo {{name}}"
+    "settings": {
+        "title": "Ajustes",
+        "open": "Abrir ajustes",
+        "aiKey": {
+            "label": "Clave de OpenAI",
+            "placeholder": "xsfg-1234abcd-5678efgh-9012ijkl-mnop3456qrst"
+        },
+        "save": "Guardar",
+        "cancel": "Cancelar"
+    },
+    "videosList": {
+        "noVideos": "No se encontraron videos.",
+        "noVideosDescription": "Parece que todavía no has seleccionado ningún video para procesar. Añade un vídeo y comienza a transcribir.",
+        "chooseFiles": "Elegir archivos"
+    }
 }
