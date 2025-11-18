@@ -30,10 +30,10 @@ jobs:
         run: npm ci
 
       - name: 🛠️ Build Angular App
-        run: npx ng build --configuration production --base-href "/[NOMBRE_DEL_REPOSITORIO]/"
+        run: npx ng build --configuration production --base-href "/itzel/"
 
       - name: 🧩 Add .nojekyll file
-        run: echo "" > dist/itzel/browser/.nojekyll
+        run: touch dist/itzel/browser/.nojekyll
 
       - name: 📤 Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
