@@ -1,3 +1,9 @@
+# [1.2.0](https://github.com/JustSergioPB/itzel/compare/v1.1.1...v1.2.0) (2025-11-22)
+
+### Features
+
+- video transcription ([da21432](https://github.com/JustSergioPB/itzel/commit/da21432befbffb621c68b14b374c3fcb7a47f97c))
+
 ## [1.1.1](https://github.com/JustSergioPB/itzel/compare/v1.1.0...v1.1.1) (2025-11-18)
 
 ### Bug Fixes
