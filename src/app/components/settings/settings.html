@@ -1,0 +1,28 @@
+<ng-container *transloco="let t; prefix: 'main.settings'">
+  <form
+    class="flex flex-col gap-6 h-full"
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    (reset)="reset()"
+  >
+    <div class="flex flex-col gap-4 flex-1">
+      <app-form-field [label]="t('aiKey.label')" for="aiKey" [error]="aiKeyError()">
+        <input
+          pInputText
+          id="aiKey"
+          aria-describedby="aiKey-help"
+          formControlName="aiKey"
+          placeholder="{{ t('aiKey.placeholder') }}"
+        />
+      </app-form-field>
+    </div>
+    <div class="flex items-center justify-end gap-2">
+      <p-button type="reset" class="p-button-text" severity="secondary" variant="text">
+        {{ t('cancel') }}
+      </p-button>
+      <p-button type="submit">
+        {{ t('save') }}
+      </p-button>
+    </div>
+  </form>
+</ng-container>

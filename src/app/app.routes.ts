@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './layouts/main-layout/main-layout';
-import { VideosList } from './views/videos-list/videos-list';
+import { Videos } from './views/videos/videos';
 
 export const routes: Routes = [
   {
@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: VideosList,
+        component: Videos,
       },
     ],
   },

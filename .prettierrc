@@ -1,9 +1,12 @@
 {
     "printWidth": 100,
-    "tabWidth": 2,
-    "tabs": false,
     "singleQuote": true,
-    "semicolon": true,
-    "quoteProps": "preserve",
-    "bracketSpacing": true
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "parser": "angular"
+            }
+        }
+    ]
 }

@@ -1,0 +1,50 @@
+<ng-container *transloco="let t; prefix: 'videosList'">
+  @if (!settingsService.isConfigured()) {
+    <app-empty-list
+      [title]="t('settings.notConfiguredTitle')"
+      [description]="t('settings.notConfiguredDescription')"
+    >
+      <i slot-icon class="pi pi-cog text-3xl!"></i>
+      <p-button slot-action [label]="t('settings.openSettings')" (onClick)="openSettings()">
+        <i class="pi pi-arrow-right" pButtonIcon></i>
+      </p-button>
+    </app-empty-list>
+  } @else if (service.videos().length === 0) {
+    <app-empty-list [title]="t('noVideos')" [description]="t('noVideosDescription')">
+      <i slot-icon class="pi pi-video text-3xl!"></i>
+      <p-fileupload
+        slot-action
+        mode="basic"
+        chooseLabel="{{ t('chooseFiles') }}"
+        chooseIcon="pi pi-upload"
+        name="demo[]"
+        [multiple]="true"
+        [auto]="true"
+        accept="video/*"
+        maxFileSize="1000000"
+        (onUpload)="onUpload($event)"
+      />
+    </app-empty-list>
+  } @else {
+    <p-table [value]="service.videos()">
+      <ng-template #header>
+        <tr>
+          <th>{{ t('name') }}</th>
+          <th>{{ t('publishedAt') }}</th>
+          <th>{{ t('status') }}</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-video>
+        <tr>
+          <td>{{ video.name }}</td>
+          <td>
+            {{ video.publishedAt | translocoDate: { dateStyle: 'medium', timeStyle: 'medium' } }}
+          </td>
+          <td>
+            <p-tag [severity]="getSeverity(video)" [value]="t('statuses.' + video.status)"></p-tag>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</ng-container>

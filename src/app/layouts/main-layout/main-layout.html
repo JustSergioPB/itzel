@@ -1,13 +1,36 @@
-<main class="h-full flex flex-col">
-  <p-menubar
-    [model]="[]"
-    class="border-t-0! border-l-0! border-r-0! rounded-none! border-b-neutral-300! lg:px-12!"
+<ng-container *transloco="let t; prefix: 'main'">
+  <main class="h-full flex flex-col">
+    <p-menubar
+      [model]="[]"
+      class="border-t-0! border-l-0! border-r-0! rounded-none! border-b-neutral-300! lg:px-12!"
+    >
+      <ng-template #start>
+        <img src="./itzel-logo.png" alt="logo" height="32" width="32" class="size-8 rounded-md" />
+      </ng-template>
+      <ng-template #end>
+        <p-button
+          icon="pi pi-cog"
+          class="p-button-text p-button-plain"
+          aria-label="Settings"
+          size="small"
+          severity="secondary"
+          variant="outlined"
+          (onClick)="toggleSettings()"
+        ></p-button>
+      </ng-template>
+    </p-menubar>
+    <div class="p-2 lg:px-12 lg:py-6 flex-1 overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+  <p-drawer
+    [visible]="settingsIsOpen()"
+    (onHide)="toggleSettings()"
+    [header]="t('settings.title')"
+    position="right"
+    styleClass="!w-4/5 lg:!w-1/3"
   >
-    <ng-template #start>
-      <img src="./itzel-logo.png" alt="logo" height="32" width="32" class="size-8 rounded-md" />
-    </ng-template>
-  </p-menubar>
-  <div class="p-2 lg:px-12 lg:py-6 flex-1 overflow-auto">
-    <router-outlet></router-outlet>
-  </div>
-</main>
+    <app-settings (submited)="toggleSettings()" (reseted)="toggleSettings()" />
+  </p-drawer>
+  <p-toast position="bottom-center" />
+</ng-container>
