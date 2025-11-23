@@ -1,3 +1,9 @@
+# [1.3.0](https://github.com/JustSergioPB/itzel/compare/v1.2.0...v1.3.0) (2025-11-23)
+
+### Features
+
+- updated audio encoder lib ([2e797da](https://github.com/JustSergioPB/itzel/commit/2e797da6a756f5b648e772400e2704070067e9a6))
+
 # [1.2.0](https://github.com/JustSergioPB/itzel/compare/v1.1.1...v1.2.0) (2025-11-22)
 
 ### Features
